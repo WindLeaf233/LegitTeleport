@@ -1,0 +1,18 @@
+name: LegitTeleport
+version: '${version}'
+main: owo.foliage.legitteleport.LegitTeleport
+api-version: '1.20'
+commands:
+  teleport:
+    aliases: [ tp ]
+    description: Teleport you to specific location or player
+    permission: legitteleport.teleport
+  waypoint:
+    aliases: [ wp ]
+    description: Manage waypoints
+    permission: legitteleport.waypoint
+permissions:
+  legitteleport.teleport:
+    default: true
+  legitteleport.waypoint:
+    default: true
