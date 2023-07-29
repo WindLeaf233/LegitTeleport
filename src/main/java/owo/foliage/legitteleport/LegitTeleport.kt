@@ -24,7 +24,6 @@ class LegitTeleport : JavaPlugin() {
     companion object {
         lateinit var instance: LegitTeleport
         lateinit var waypointManager: WaypointManager
-        lateinit var logger: ComponentLogger
     }
 
     private val liteCommands: LiteCommands<CommandSender> =
@@ -37,7 +36,6 @@ class LegitTeleport : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
-        Companion.logger = componentLogger
         FileUtil.saveResource("waypoints.json")
         reloadConfig()
         waypointManager = WaypointManager()
