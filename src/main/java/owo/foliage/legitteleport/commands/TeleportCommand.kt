@@ -37,7 +37,7 @@ class TeleportCommand {
             Bukkit.broadcast(
                 Component.text("${sender.name} teleported to waypoint ", NamedTextColor.GREEN).append(
                     Component.text(
-                        "[${waypoint.name}] (${location.x}, ${location.y}, ${location.z} :: ${location.world.name}",
+                        "[${waypoint.name}] (${location.x}, ${location.y}, ${location.z} :: ${location.world.name})",
                         NamedTextColor.BLUE
                     )
                 )
@@ -65,7 +65,7 @@ class TeleportCommand {
             Bukkit.broadcast(
                 Component.text("${sender.name} teleported to waypoint ", NamedTextColor.GREEN).append(
                     Component.text(
-                        "[${waypoint.name}] (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} :: ${world.name}",
+                        "[${waypoint.name}] (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} :: ${world.name})",
                         NamedTextColor.BLUE
                     )
                 )
