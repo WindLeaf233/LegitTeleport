@@ -19,21 +19,16 @@ class PlayerSharePointListener : Listener {
             e.isCancelled = true
             val waypoint = WaypointsUtil.parseStringToWaypoint(message)
             val matched: Waypoint? = waypointManager.matchWaypoint(waypoint)
-            if (matched == null) {
+            if (matched == null || waypoint.name == matched.name) {
                 Bukkit.broadcast(Component.text("${e.player.name} shared a waypoint: $message"))
                 waypointManager.addWaypoint(waypoint)
             } else {
-                if (waypoint.name == matched.name) {
-                    Bukkit.broadcast(Component.text("${e.player.name} updated the waypoint: $message"))
-                    waypointManager.addWaypoint(waypoint)
-                } else {
-                    e.player.sendMessage(
-                        Component.text(
-                            "There is already a waypoint [${matched.name}] pointing to location (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} :: ${waypoint.dim})!",
-                            NamedTextColor.RED
-                        )
+                e.player.sendMessage(
+                    Component.text(
+                        "There is already a waypoint [${matched.name}] pointing to location (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} :: ${waypoint.dim})!",
+                        NamedTextColor.RED
                     )
-                }
+                )
             }
         }
     }
