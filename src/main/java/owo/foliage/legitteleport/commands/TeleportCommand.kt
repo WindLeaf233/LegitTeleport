@@ -35,10 +35,10 @@ class TeleportCommand {
         if (waypoint != null) {
             sender.teleport(location)
             Bukkit.broadcast(
-                Component.text("${sender.name} teleported to waypoint ", NamedTextColor.GREEN).append(
+                Component.text("${sender.name} teleported to waypoint ", NamedTextColor.DARK_GREEN).append(
                     Component.text(
                         "[${waypoint.name}] (${location.x}, ${location.y}, ${location.z} :: ${location.world.name})",
-                        NamedTextColor.BLUE
+                        NamedTextColor.DARK_AQUA
                     )
                 )
             )
@@ -63,10 +63,10 @@ class TeleportCommand {
         if (sender.world == world) {
             sender.teleport(Location(world, waypoint.x.toDouble(), waypoint.y.toDouble(), waypoint.z.toDouble()))
             Bukkit.broadcast(
-                Component.text("${sender.name} teleported to waypoint ", NamedTextColor.GREEN).append(
+                Component.text("${sender.name} teleported to waypoint ", NamedTextColor.DARK_GREEN).append(
                     Component.text(
                         "[${waypoint.name}] (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} :: ${world.name})",
-                        NamedTextColor.BLUE
+                        NamedTextColor.DARK_AQUA
                     )
                 )
             )
