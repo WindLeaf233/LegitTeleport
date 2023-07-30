@@ -4,7 +4,6 @@ import dev.rollczi.litecommands.LiteCommands
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory
 import dev.rollczi.litecommands.bukkit.tools.BukkitOnlyPlayerContextual
 import dev.rollczi.litecommands.bukkit.tools.BukkitPlayerArgument
-import net.kyori.adventure.text.logger.slf4j.ComponentLogger
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Location
 import org.bukkit.command.CommandSender

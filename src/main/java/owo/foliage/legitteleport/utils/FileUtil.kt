@@ -1,10 +1,10 @@
 package owo.foliage.legitteleport.utils
 
-import owo.foliage.legitteleport.LegitTeleport
+import owo.foliage.legitteleport.LegitTeleport.Companion.instance
 import java.io.File
 
 object FileUtil {
-    private val path = LegitTeleport.instance.dataFolder.absolutePath + File.separator
+    private val path = instance.dataFolder.absolutePath + File.separator
 
     fun makeFile(path: String) {
         val file = File(path)
@@ -32,7 +32,7 @@ object FileUtil {
     }
 
     fun saveResource(name: String) {
-        if (!File(getResourcePath(name)).exists()) LegitTeleport.instance.saveResource(name, false)
+        if (!File(getResourcePath(name)).exists()) instance.saveResource(name, false)
     }
 
     fun getResourcePath(name: String) = "%s%s".format(path, name)
