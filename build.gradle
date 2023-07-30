@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'owo.foliage'
-version = '1.0'
+version = '1.1'
 String version_kotlin = '1.9.0'
 
 configurations.implementation.setCanBeResolved(true)
