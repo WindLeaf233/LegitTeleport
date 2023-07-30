@@ -1,5 +1,7 @@
 package owo.foliage.legitteleport.utils
 
+import org.bukkit.Bukkit
+import org.bukkit.World
 import owo.foliage.legitteleport.waypoint.Waypoint
 
 object WaypointsUtil {
@@ -15,11 +17,15 @@ object WaypointsUtil {
     }
 
     fun dimToWorldName(dimString: String): String {
+        val worlds = Bukkit.getWorlds()
+        val worldNormal = worlds.find { it.environment == World.Environment.NORMAL }
+        val worldNether = worlds.find { it.environment == World.Environment.NETHER }
+        val worldTheEnd = worlds.find { it.environment == World.Environment.THE_END }
         val mapping = hashMapOf(
-            "minecraft:overworld" to "world",
-            "minecraft:the_nether" to "world_nether",
-            "minecraft:the_end" to "world_end"
+            "minecraft:overworld" to worldNormal?.name,
+            "minecraft:the_nether" to worldNether?.name,
+            "minecraft:the_end" to worldTheEnd?.name
         )
-        return mapping[dimString] ?: "world"
+        return mapping[dimString] ?: worldNormal?.name ?: "world"
     }
 }
