@@ -42,4 +42,7 @@ class WaypointManager {
         waypoints.remove(waypoint)
         refreshFile()
     }
+
+    fun matchWaypoint(waypoint: Waypoint) =
+        waypoints.find { it.x == waypoint.x && it.y == waypoint.y && it.z == waypoint.z && it.dim == waypoint.dim }
 }
