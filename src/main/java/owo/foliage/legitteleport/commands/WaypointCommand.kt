@@ -6,6 +6,7 @@ import dev.rollczi.litecommands.command.permission.Permission
 import dev.rollczi.litecommands.command.route.Route
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -20,12 +21,8 @@ class WaypointCommand {
     fun removeCommand(sender: CommandSender, @Arg waypoint: Waypoint) {
         waypointManager.removeWaypoint(waypoint)
         Bukkit.broadcast(
-            Component.text("${sender.name} removed the waypoint ", NamedTextColor.YELLOW).append(
-                Component.text(
-                    "[${waypoint.name}] (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} :: ${
-                        WaypointsUtil.dimToWorldName(waypoint.dim)
-                    })", NamedTextColor.BLUE
-                )
+            Component.text("${sender.name} removed the waypoint ", TextColor.color(194, 169, 15)).append(
+                Component.text(WaypointsUtil.buildWaypointString(waypoint), NamedTextColor.DARK_AQUA)
             )
         )
     }

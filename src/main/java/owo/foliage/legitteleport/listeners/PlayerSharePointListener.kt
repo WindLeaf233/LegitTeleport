@@ -25,8 +25,9 @@ class PlayerSharePointListener : Listener {
             } else {
                 e.player.sendMessage(
                     Component.text(
-                        "There is already a waypoint [${matched.name}] pointing to location (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} :: ${waypoint.dim})!",
-                        NamedTextColor.RED
+                        "There is already a waypoint [${matched.name}] pointing to location ${
+                            WaypointsUtil.buildLocationString(WaypointsUtil.getLocation(matched))
+                        }!", NamedTextColor.RED
                     )
                 )
             }

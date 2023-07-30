@@ -1,6 +1,7 @@
 package owo.foliage.legitteleport.utils
 
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.World
 import owo.foliage.legitteleport.waypoint.Waypoint
 
@@ -28,4 +29,19 @@ object WaypointsUtil {
         )
         return mapping[dimString] ?: worldNormal?.name ?: "world"
     }
+
+    fun getLocation(waypoint: Waypoint) = Location(
+        Bukkit.getWorld(dimToWorldName(waypoint.dim)),
+        waypoint.x.toDouble(),
+        waypoint.y.toDouble(),
+        waypoint.z.toDouble()
+    )
+
+    fun buildWaypointString(waypoint: Waypoint) =
+        "[${waypoint.name}] (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} | ${
+            dimToWorldName(waypoint.dim)
+        })"
+
+    fun buildLocationString(location: Location) =
+        "(${location.x}, ${location.y}, ${location.z} | ${location.world.name})"
 }

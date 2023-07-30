@@ -20,7 +20,7 @@ class TeleportCommand {
     @Execute(required = 1)
     fun teleportPlayer(sender: Player, @Arg to: Player) {
         sender.teleport(to)
-        Bukkit.broadcast(Component.text("${sender.name} teleported to ${to.name}"))
+        Bukkit.broadcast(Component.text("${sender.name} teleported to ${to.name}", NamedTextColor.DARK_GREEN))
     }
 
     @Execute(required = 3)
@@ -36,16 +36,13 @@ class TeleportCommand {
             sender.teleport(location)
             Bukkit.broadcast(
                 Component.text("${sender.name} teleported to waypoint ", NamedTextColor.DARK_GREEN).append(
-                    Component.text(
-                        "[${waypoint.name}] (${location.x}, ${location.y}, ${location.z} :: ${location.world.name})",
-                        NamedTextColor.DARK_AQUA
-                    )
+                    Component.text(WaypointsUtil.buildWaypointString(waypoint), NamedTextColor.DARK_AQUA)
                 )
             )
         } else {
             sender.sendMessage(
                 Component.text(
-                    "The location (${location.x}, ${location.y}, ${location.z} :: ${location.world.name}) is not a valid waypoint!",
+                    "The location ${WaypointsUtil.buildLocationString(location)} is not a valid waypoint!",
                     NamedTextColor.RED
                 )
             )
@@ -61,13 +58,10 @@ class TeleportCommand {
     fun teleportWaypoint(sender: Player, @Arg waypoint: Waypoint) {
         val world = Bukkit.getWorld(WaypointsUtil.dimToWorldName(waypoint.dim)) ?: sender.world
         if (sender.world == world) {
-            sender.teleport(Location(world, waypoint.x.toDouble(), waypoint.y.toDouble(), waypoint.z.toDouble()))
+            sender.teleport(WaypointsUtil.getLocation(waypoint))
             Bukkit.broadcast(
                 Component.text("${sender.name} teleported to waypoint ", NamedTextColor.DARK_GREEN).append(
-                    Component.text(
-                        "[${waypoint.name}] (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} :: ${world.name})",
-                        NamedTextColor.DARK_AQUA
-                    )
+                    Component.text(WaypointsUtil.buildWaypointString(waypoint), NamedTextColor.DARK_AQUA)
                 )
             )
         } else sender.sendMessage(Component.text("Can not travel between different worlds!", NamedTextColor.RED))
