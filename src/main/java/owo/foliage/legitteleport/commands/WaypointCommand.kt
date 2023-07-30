@@ -34,22 +34,15 @@ class WaypointCommand {
     fun listCommand(sender: CommandSender) {
         val waypoints = waypointManager.getWaypoints()
         if (waypoints.size != 0) {
-            if (sender is Player) {
-                sender.sendMessage(
-                    Component.text(
-                        "Available waypoints: ${
-                            waypoints.joinToString(", ") {
-                                "§${if (Bukkit.getWorld(WaypointsUtil.dimToWorldName(it.dim)) == sender.world) "a" else "c"}${it.name}(${
-                                    WaypointsUtil.dimToWorldName(
-                                        it.dim
-                                    )
-                                })§r"
-                            }
-                        }"
-                    )
-                )
-            } else {
-                sender.sendMessage(Component.text("Available waypoints: ${waypoints.joinToString(", ")}"))
+            sender.sendMessage(Component.text("Available waypoints: "))
+            for (worldName in Bukkit.getWorlds().map { it.name }) {
+                if (worldName in waypoints.map { WaypointsUtil.dimToWorldName(it.dim) }) {
+                    sender.sendMessage(if (sender is Player) Component.text("  $worldName > ${
+                        waypoints.filter { WaypointsUtil.dimToWorldName(it.dim) == worldName }
+                            .joinToString(", ") { it.name }
+                    }", if (worldName == sender.world.name) NamedTextColor.GREEN else NamedTextColor.RED)
+                    else Component.text("$worldName >> ${waypoints.joinToString(", ")}"))
+                }
             }
         } else sender.sendMessage(Component.text("There is no available waypoints!", NamedTextColor.RED))
     }
