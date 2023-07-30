@@ -4,12 +4,10 @@ import dev.rollczi.litecommands.argument.Arg
 import dev.rollczi.litecommands.command.execute.Execute
 import dev.rollczi.litecommands.command.permission.Permission
 import dev.rollczi.litecommands.command.route.Route
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextColor
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import owo.foliage.legitteleport.LegitTeleport.Companion.mm
 import owo.foliage.legitteleport.LegitTeleport.Companion.waypointManager
 import owo.foliage.legitteleport.utils.WaypointsUtil
 import owo.foliage.legitteleport.waypoint.Waypoint
@@ -21,8 +19,10 @@ class WaypointCommand {
     fun removeCommand(sender: CommandSender, @Arg waypoint: Waypoint) {
         waypointManager.removeWaypoint(waypoint)
         Bukkit.broadcast(
-            Component.text("${sender.name} removed the waypoint ", TextColor.color(194, 169, 15)).append(
-                Component.text(WaypointsUtil.buildWaypointString(waypoint), NamedTextColor.DARK_AQUA)
+            mm.deserialize(
+                "<#c2a90f>%s removed the waypoint</#c2a90f> <dark_aqua>%s</dark_aqua>".format(
+                    sender.name, WaypointsUtil.buildWaypointString(waypoint)
+                )
             )
         )
     }
@@ -31,16 +31,25 @@ class WaypointCommand {
     fun listCommand(sender: CommandSender) {
         val waypoints = waypointManager.getWaypoints()
         if (waypoints.size != 0) {
-            sender.sendMessage(Component.text("Available waypoints: "))
+            sender.sendMessage(mm.deserialize("Available waypoints: "))
             for (worldName in Bukkit.getWorlds().map { it.name }) {
                 if (worldName in waypoints.map { WaypointsUtil.dimToWorldName(it.dim) }) {
-                    sender.sendMessage(if (sender is Player) Component.text("  $worldName > ${
-                        waypoints.filter { WaypointsUtil.dimToWorldName(it.dim) == worldName }
-                            .joinToString(", ") { it.name }
-                    }", if (worldName == sender.world.name) NamedTextColor.GREEN else NamedTextColor.RED)
-                    else Component.text("$worldName >> ${waypoints.joinToString(", ")}"))
+                    sender.sendMessage(
+                        if (sender is Player) {
+                            val color = if (worldName == sender.world.name) "green" else "red"
+                            mm.deserialize(
+                                "<%s> %s > %s</%s>".format(
+                                    color,
+                                    worldName,
+                                    waypoints.filter { WaypointsUtil.dimToWorldName(it.dim) == worldName }
+                                        .joinToString(", ") { it.name },
+                                    color
+                                )
+                            )
+                        } else mm.deserialize("%s > %s".format(worldName, waypoints.joinToString(", ")))
+                    )
                 }
             }
-        } else sender.sendMessage(Component.text("There is no available waypoints!", NamedTextColor.RED))
+        } else sender.sendMessage(mm.deserialize("<red>There is no available waypoints!</red>"))
     }
 }

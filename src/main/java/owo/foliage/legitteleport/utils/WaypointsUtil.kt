@@ -37,11 +37,10 @@ object WaypointsUtil {
         waypoint.z.toDouble()
     )
 
-    fun buildWaypointString(waypoint: Waypoint) =
-        "[${waypoint.name}] (${waypoint.x.toDouble()}, ${waypoint.y.toDouble()}, ${waypoint.z.toDouble()} | ${
-            dimToWorldName(waypoint.dim)
-        })"
+    fun buildWaypointString(waypoint: Waypoint) = "[%s] (%.1f, %.1f, %.1f | %s)".format(
+        waypoint.name, waypoint.x.toDouble(), waypoint.y.toDouble(), waypoint.z.toDouble(), dimToWorldName(waypoint.dim)
+    )
 
     fun buildLocationString(location: Location) =
-        "(${location.x}, ${location.y}, ${location.z} | ${location.world.name})"
+        "(%.1f, %.1f, %.1f | %s)".format(location.x, location.y, location.z, location.world.name)
 }

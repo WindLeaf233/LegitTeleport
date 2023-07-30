@@ -5,6 +5,7 @@ import dev.rollczi.litecommands.bukkit.LiteBukkitFactory
 import dev.rollczi.litecommands.bukkit.tools.BukkitOnlyPlayerContextual
 import dev.rollczi.litecommands.bukkit.tools.BukkitPlayerArgument
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Location
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -24,6 +25,7 @@ class LegitTeleport : JavaPlugin() {
     companion object {
         lateinit var instance: LegitTeleport
         lateinit var waypointManager: WaypointManager
+        lateinit var mm: MiniMessage
     }
 
     private val liteCommands: LiteCommands<CommandSender> =
@@ -36,6 +38,7 @@ class LegitTeleport : JavaPlugin() {
 
     override fun onEnable() {
         instance = this
+        mm = MiniMessage.miniMessage()
         FileUtil.saveResource("waypoints.json")
         reloadConfig()
         waypointManager = WaypointManager()

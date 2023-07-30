@@ -30,7 +30,13 @@ class LocationArgument : MultilevelArgument<Location> {
 
     override fun suggest(invocation: LiteInvocation): MutableList<Suggestion> {
         val location = (invocation.sender().handle as Player).location
-        return mutableListOf(Suggestion.multilevel(location.x.roundToInt().toString(), location.y.roundToInt().toString(), location.z.roundToInt().toString()))
+        return mutableListOf(
+            Suggestion.multilevel(
+                location.x.roundToInt().toString(),
+                location.y.roundToInt().toString(),
+                location.z.roundToInt().toString()
+            )
+        )
     }
 
     override fun countMultilevel() = 3

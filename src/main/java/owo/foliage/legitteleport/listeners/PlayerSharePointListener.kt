@@ -1,12 +1,11 @@
 package owo.foliage.legitteleport.listeners
 
 import io.papermc.paper.event.player.AsyncChatEvent
-import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import owo.foliage.legitteleport.LegitTeleport.Companion.mm
 import owo.foliage.legitteleport.LegitTeleport.Companion.waypointManager
 import owo.foliage.legitteleport.utils.WaypointsUtil
 import owo.foliage.legitteleport.waypoint.Waypoint
@@ -20,14 +19,14 @@ class PlayerSharePointListener : Listener {
             val waypoint = WaypointsUtil.parseStringToWaypoint(message)
             val matched: Waypoint? = waypointManager.matchWaypoint(waypoint)
             if (matched == null || waypoint.name == matched.name) {
-                Bukkit.broadcast(Component.text("${e.player.name} shared a waypoint: $message"))
+                Bukkit.broadcast(mm.deserialize("%s shared a waypoint: %s".format(e.player.name, message)))
                 waypointManager.addWaypoint(waypoint)
             } else {
                 e.player.sendMessage(
-                    Component.text(
-                        "There is already a waypoint [${matched.name}] pointing to location ${
-                            WaypointsUtil.buildLocationString(WaypointsUtil.getLocation(matched))
-                        }!", NamedTextColor.RED
+                    mm.deserialize(
+                        "<red>There is already an existent waypoint [%s] pointing to location %s!</red>".format(
+                            matched.name, WaypointsUtil.buildLocationString(WaypointsUtil.getLocation(matched))
+                        )
                     )
                 )
             }

@@ -1,7 +1,7 @@
 package owo.foliage.legitteleport.utils
 
 import owo.foliage.legitteleport.LegitTeleport
-import java.io.*
+import java.io.File
 
 object FileUtil {
     private val path = LegitTeleport.instance.dataFolder.absolutePath + File.separator
@@ -35,5 +35,5 @@ object FileUtil {
         if (!File(getResourcePath(name)).exists()) LegitTeleport.instance.saveResource(name, false)
     }
 
-    fun getResourcePath(name: String) = "$path$name"
+    fun getResourcePath(name: String) = "%s%s".format(path, name)
 }

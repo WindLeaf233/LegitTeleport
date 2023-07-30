@@ -4,11 +4,10 @@ import dev.rollczi.litecommands.argument.Arg
 import dev.rollczi.litecommands.command.execute.Execute
 import dev.rollczi.litecommands.command.permission.Permission
 import dev.rollczi.litecommands.command.route.Route
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
+import owo.foliage.legitteleport.LegitTeleport.Companion.mm
 import owo.foliage.legitteleport.LegitTeleport.Companion.waypointManager
 import owo.foliage.legitteleport.utils.WaypointsUtil
 import owo.foliage.legitteleport.waypoint.Waypoint
@@ -20,7 +19,7 @@ class TeleportCommand {
     @Execute(required = 1)
     fun teleportPlayer(sender: Player, @Arg to: Player) {
         sender.teleport(to)
-        Bukkit.broadcast(Component.text("${sender.name} teleported to ${to.name}", NamedTextColor.DARK_GREEN))
+        Bukkit.broadcast(mm.deserialize("<dark_green>%s teleported to %s</dark_green>".format(sender.name, to.name)))
     }
 
     @Execute(required = 3)
@@ -35,21 +34,24 @@ class TeleportCommand {
         if (waypoint != null) {
             sender.teleport(location)
             Bukkit.broadcast(
-                Component.text("${sender.name} teleported to waypoint ", NamedTextColor.DARK_GREEN).append(
-                    Component.text(WaypointsUtil.buildWaypointString(waypoint), NamedTextColor.DARK_AQUA)
+                mm.deserialize(
+                    "<dark_green>%s teleported to the waypoint</dark_green> <dark_aqua>%s</dark_aqua> ".format(
+                        sender.name, WaypointsUtil.buildWaypointString(waypoint)
+                    )
                 )
             )
-        } else {
-            sender.sendMessage(
-                Component.text(
-                    "The location ${WaypointsUtil.buildLocationString(location)} is not a valid waypoint!",
-                    NamedTextColor.RED
+        } else sender.sendMessage(
+            mm.deserialize(
+                "<red>The location %s is not a valid waypoint!</red>".format(
+                    WaypointsUtil.buildLocationString(
+                        location
+                    )
                 )
             )
-        }
+        )
     }
 
-    @Execute(required = 4) // compatible with VoxelMap
+    @Execute(required = 4) // be compatible with VoxelMap
     fun teleportSelfToLocation(sender: Player, @Arg target: Player, @Arg location: Location) {
         if (sender == target) teleportLocation(sender, location)
     }
@@ -60,10 +62,12 @@ class TeleportCommand {
         if (sender.world == world) {
             sender.teleport(WaypointsUtil.getLocation(waypoint))
             Bukkit.broadcast(
-                Component.text("${sender.name} teleported to waypoint ", NamedTextColor.DARK_GREEN).append(
-                    Component.text(WaypointsUtil.buildWaypointString(waypoint), NamedTextColor.DARK_AQUA)
+                mm.deserialize(
+                    "<dark_green>%s teleported to the waypoint</dark_green> <dark_aqua>%s</dark_aqua>".format(
+                        sender.name, WaypointsUtil.buildWaypointString(waypoint)
+                    )
                 )
             )
-        } else sender.sendMessage(Component.text("Can not travel between different worlds!", NamedTextColor.RED))
+        } else sender.sendMessage(mm.deserialize("<red>Can not travel between different worlds!</red>"))
     }
 }
