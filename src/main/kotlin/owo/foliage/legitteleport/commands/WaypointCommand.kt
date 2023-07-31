@@ -46,7 +46,7 @@ class WaypointCommand {
                                     color
                                 )
                             )
-                        } else mm.deserialize("%s > %s".format(worldName, waypoints.joinToString(", ")))
+                        } else mm.deserialize("%s > %s".format(worldName, waypoints.joinToString(", ") { it.name }))
                     )
                 }
             }
