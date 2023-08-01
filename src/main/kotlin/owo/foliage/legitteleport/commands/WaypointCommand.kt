@@ -38,15 +38,19 @@ class WaypointCommand {
                         if (sender is Player) {
                             val color = if (worldName == sender.world.name) "green" else "red"
                             mm.deserialize(
-                                "<%s> %s > %s</%s>".format(
-                                    color,
+                                "<%s> %s > %s</%s>".format(color,
                                     worldName,
                                     waypoints.filter { WaypointsUtil.dimToWorldName(it.dim) == worldName }
                                         .joinToString(", ") { it.name },
                                     color
                                 )
                             )
-                        } else mm.deserialize("%s > %s".format(worldName, waypoints.joinToString(", ") { it.name }))
+                        } else mm.deserialize(
+                            "%s > %s".format(
+                                worldName,
+                                waypoints.filter { WaypointsUtil.dimToWorldName(it.dim) == worldName }
+                                    .joinToString(", ") { it.name })
+                        )
                     )
                 }
             }
